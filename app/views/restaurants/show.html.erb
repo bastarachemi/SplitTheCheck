@@ -1,29 +1,43 @@
-<p id="notice"><%= notice %></p>
+<div class="row mx-auto mt-0 mb-4 h-100">
+  <div class="d-flex flex-column justify-content-between col-md-6 restaurant-details mb-3 pt-4 px-5">
+    <div>
+      <h2 class="mb-3 text-center">Restaurant Details</h2>
 
-<p>
-  <strong>Name:</strong>
-  <%= @restaurant.name %>
-</p>
+      <p>
+        <strong>Name:</strong>
+        <%= @restaurant.name %>
+      </p>
 
-<p>
-  <strong>City:</strong>
-  <%= @restaurant.city %>
-</p>
+      <p>
+        <strong>City:</strong>
+        <%= @restaurant.city %>
+      </p>
 
-<p>
-  <strong>State:</strong>
-  <%= @restaurant.state %>
-</p>
+      <p>
+        <strong>State:</strong>
+        <%= @restaurant.state %>
+      </p>
 
-<p>
-  <strong>Will split:</strong>
-  <%= @restaurant.will_split %>
-</p>
+      <p>
+        <strong>Will Split Votes:</strong>
+        <%= @restaurant.will_split %>
+      </p>
 
-<p>
-  <strong>Wont split:</strong>
-  <%= @restaurant.wont_split %>
-</p>
+      <p>
+        <strong>Wont Split Votes:</strong>
+        <%= @restaurant.wont_split %>
+      </p>
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to 'Back', restaurants_path %>
+      <%= button_to 'Edit Restaurant', edit_restaurant_path(@restaurant), method: :get, class: "d-block btn mx-auto mb-4" %>
+    </div>
+    <%= link_to 'Back', restaurants_path, class: "align-items-bottom me-auto" %>
+  </div>
+
+  <div class="col-md-6 voting pt-4 px-5">
+    <h2 class="mb-3 text-center">Add Your Vote</h2>
+    <p>Vote below to indicate whether <%= @restaurant.name %> in <%= @restaurant.city %>, <%= @restaurant.state %> allows you to split the check.</p>
+
+    
+    <p id="notice" class="text-center"><%= notice %></p>
+  </div>
+</div>

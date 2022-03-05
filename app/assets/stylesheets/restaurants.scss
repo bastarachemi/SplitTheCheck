@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 #bootstrap-overrides {
-  td, a {
+  td, a, label, a {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 1.05em;
   }
@@ -18,7 +18,18 @@
     padding: 10px 25px;
     font-size: 12px;
   }
+  a:hover {
+    border-radius: 2px;
+    background-color: #FF5200;
+    color: white;
+  }
 }
 main {
   background-color: #FEE2b3;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+}
+.voting {
+  background-color: #F5C97E;
 }
