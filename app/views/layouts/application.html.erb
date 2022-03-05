@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    
+
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&family=Playfair+Display:wght@500;700&display=swap');
     </style>
@@ -18,7 +18,15 @@
     <header class="mb-0">
       <h1 class="text-center">Split The <span class="orange-text">Check</span></h1>
     </header>
-    <%= yield %>
+    <main class='mt-0 <%= controller.controller_name %>'>
+      <% if notice %>
+        <p class="notice text-center my-2"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert text-center my-2"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </main>
     <footer class="footer p-4">
       <small>Last Updated: 03/06/2022</small>
     </footer>

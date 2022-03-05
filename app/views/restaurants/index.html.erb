@@ -1,5 +1,4 @@
-<main class="mt-0 p-4 h-100">
-  <p id="notice"><%= notice %></p>
+<div class="p-4 container-fluid">
 
   <table class="table table-striped mx-auto mt-3 text-center">
     <thead>
@@ -8,7 +7,7 @@
         <th>Location</th>
         <th>Will split</th>
         <th>Wont split</th>
-        <th></th>
+        <th colspan="2"></th>
       </tr>
     </thead>
 
@@ -27,5 +26,5 @@
 
   <br>
 
-  <%= link_to 'New Restaurant', new_restaurant_path %>
-</main>
+  <%= button_to 'Add New Restaurant', new_restaurant_path, method: :get, class: "d-block btn mb-4" %>
+</div>

@@ -19,8 +19,11 @@ header {
   background-color: #333333;
   padding: 1em 0;
 }
+main {
+  flex: 1 1 auto;
+}
 h1 {
-  font-family: "Playfair Display", serif;
+  font-family: 'Playfair Display', serif;
   font-weight: bold;
   color: white;
 }
@@ -28,6 +31,7 @@ h1 {
   color: #FF5200;
 }
 footer {
+  bottom: 0;
   background-color: #645F56;
   color: white;
 }
