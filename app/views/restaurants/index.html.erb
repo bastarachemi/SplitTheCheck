@@ -1,5 +1,21 @@
 <div class="p-4 container-fluid">
 
+  <%= form_tag(restaurants_path, method: :get, class: "w-75 mx-auto") do %>
+  <div class="row align-items-end gx-5 gy-3">
+    <div class="col-md-5">
+      <%= label_tag :restaurant_name, "Restaurant Name:", class: "form-label" %>
+      <%= text_field_tag :restaurant_name, @restaurant_name, placeholder: "Name", class: "form-control" %>
+    </div>
+    <div class="col-md-5">
+      <%= label_tag :restaurant_location, "Restaurant Location:", class: "form-label" %>
+      <%= text_field_tag :restaurant_location, @restaurant_location, placeholder: "Location", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= submit_tag "Search", class: "btn px-4" %>
+    </div>
+  </div>
+  <% end %>
+
   <table class="table table-striped mx-auto mt-3 text-center">
     <thead>
       <tr>

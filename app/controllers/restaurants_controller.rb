@@ -1,9 +1,10 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[ show edit update destroy ]
+  before_action :get_search_values, only: [:index]
 
   # GET /restaurants or /restaurants.json
   def index
-    @restaurants = Restaurant.order('name').limit(10);
+    @restaurants = Restaurant.order('name').search(session[:restaurant_name], session[:restaurant_location]).limit(10);
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -65,6 +66,14 @@ class RestaurantsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def restaurant_params
-      params.require(:restaurant).permit(:name, :city, :state, :will_split, :wont_split)
+      params.require(:restaurant).permit(:name, :city, :state, :will_split, :wont_split, :restaurant_name, :restaurant_location)
+    end
+
+    def get_search_values
+      if params[:restaurant_name] || params[:restaurant_location]
+        session[:page] = 1
+        session[:restaurant_name] = params[:restaurant_name]
+        session[:restaurant_location] = params[:restaurant_location]
+      end
     end
 end
