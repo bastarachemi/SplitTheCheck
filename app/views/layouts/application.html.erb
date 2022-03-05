@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
     <title>SplitTheCheck</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&family=Playfair+Display:wght@500;700&display=swap');
+    </style>
+    
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body id="bootstrap-overrides" class="d-flex flex-column h-100">
+    <header class="mb-0">
+      <h1 class="text-center">Split The <span class="orange-text">Check</span></h1>
+    </header>
     <%= yield %>
+    <footer class="footer p-4">
+      <small>Last Updated: 03/06/2022</small>
+    </footer>
   </body>
 </html>

@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
+
+header {
+  background-color: #333333;
+  padding: 1em 0;
+}
+h1 {
+  font-family: "Playfair Display", serif;
+  font-weight: bold;
+  color: white;
+}
+.orange-text {
+  color: #FF5200;
+}
+footer {
+  background-color: #645F56;
+  color: white;
+}
