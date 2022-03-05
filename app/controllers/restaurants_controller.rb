@@ -1,10 +1,16 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[ show edit update destroy ]
   before_action :get_search_values, only: [:index]
+  before_action :set_page, only: [:index]
+  before_action :get_last_page, only: [:index]
 
   # GET /restaurants or /restaurants.json
   def index
-    @restaurants = Restaurant.order('name').search(session[:restaurant_name], session[:restaurant_location]).limit(10);
+    @page = session[:page].to_i
+    @last_page = session[:last_page].to_i
+    @restaurant_name = session[:restaurant_name]
+    @restaurant_location = session[:restaurant_location]
+    @restaurants = Restaurant.order('name').search(session[:restaurant_name], session[:restaurant_location]).limit(10).offset((@page - 1) * 10);
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -58,6 +64,11 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  def go_to_page
+    session[:page] = params[:page].to_i.clamp(1, session[:last_page])
+    redirect_to restaurants_url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant
@@ -75,5 +86,13 @@ class RestaurantsController < ApplicationController
         session[:restaurant_name] = params[:restaurant_name]
         session[:restaurant_location] = params[:restaurant_location]
       end
+    end
+
+    def set_page
+      session[:page] ||= 1
+    end
+
+    def get_last_page
+      session[:last_page] = (1.0 * Restaurant.search(session[:restaurant_name], session[:restaurant_location]).count / 10).ceil()
     end
 end

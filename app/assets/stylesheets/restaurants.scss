@@ -18,10 +18,20 @@
     padding: 10px 25px;
     font-size: 12px;
   }
+  .page-link {
+    background-color: #F5C97E;
+    border-color: #645F56;
+  }
   a:hover {
     border-radius: 2px;
     background-color: #FF5200;
     color: white;
+  }
+  .page-item a:visited {
+    color: #0d6efd;
+  }
+  .page-item.disabled a:visited {
+    color: #6c757d;
   }
 }
 main {

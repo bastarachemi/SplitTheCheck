@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
   resources :restaurants
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'restaurants#index', as: 'restaurants_index'
+
+  get '/restaurants/page/:page', to: 'restaurants#go_to_page', as: 'restaurants_page'
+  get '*path' => redirect('/')
 end

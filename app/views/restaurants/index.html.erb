@@ -40,7 +40,29 @@
     </tbody>
   </table>
 
-  <br>
+  <div class="d-flex flex-column-reverse flex-md-row justify-content-between">
+    <div id="add-restaurant-btn">
+      <%= button_to 'Add New Restaurant', new_restaurant_path, method: :get, class: "d-block btn mb-4" %>
+    </div>
+    <div class="align-self-end">
+      <nav class="mb-3">
+        <ul class="pagination mb-1">
+          <%= content_tag :li, class: "page-item" do %>
+          <%= link_to 'First', restaurants_page_path(1), class: "page-link" %>
+          <% end %>
+          <%= content_tag :li, class: "page-item #{'disabled' if @page <= 1}" do %>
+          <%= link_to 'Previous 10 Restaurants', restaurants_page_path(@page - 1), class: "page-link" %>
+          <% end %>
+          <%= tag.li class: "page-item #{'disabled' if @page >= @last_page}" do %>
+          <%= link_to 'Next 10 Restaurants', restaurants_page_path(@page + 1), class: "page-link" %>
+          <% end %>
+          <%= tag.li class: "page-item" do %>
+          <%= link_to 'Last', restaurants_page_path(@last_page), class: "page-link" %>
+          <% end %>
+        </ul>
+      </nav>
+      <p class="mt-0 text-end">Showing Page <%= @page %> of <%= @last_page %></p>
+    </div>
+  </div>
 
-  <%= button_to 'Add New Restaurant', new_restaurant_path, method: :get, class: "d-block btn mb-4" %>
 </div>
