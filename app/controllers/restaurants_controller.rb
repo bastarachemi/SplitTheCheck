@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.order('name').limit(10);
   end
 
   # GET /restaurants/1 or /restaurants/1.json
