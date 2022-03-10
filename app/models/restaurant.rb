@@ -1,4 +1,7 @@
 class Restaurant < ApplicationRecord
+  validates :name, :city, :state, presence: true
+  validates :name, uniqueness: {scope: [:city, :state]}
+
   def self.search(restaurant_name, restaurant_location)
     restaurant = Restaurant.all
     if restaurant_name.present?
