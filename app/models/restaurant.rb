@@ -14,4 +14,13 @@ class Restaurant < ApplicationRecord
     end
     return restaurant
   end
+
+  def vote(split)
+    if split == :will_split
+      self.increment(:will_split)
+    elsif split == :wont_split
+      self.increment(:wont_split)
+    end
+    self.save
+  end
 end

@@ -69,6 +69,18 @@ class RestaurantsController < ApplicationController
     redirect_to restaurants_url
   end
 
+  def upvote
+    @restaurant = Restaurant.find(params[:id])
+    @restaurant.vote(:will_split)
+    redirect_to restaurant_url(@restaurant), notice: "Thanks for voting! Restaurant was upvoted."
+  end
+
+  def downvote
+    @restaurant = Restaurant.find(params[:id])
+    @restaurant.vote(:wont_split)
+    redirect_to restaurant_url(@restaurant), notice: "Thanks for voting! Restaurant was downvoted."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant

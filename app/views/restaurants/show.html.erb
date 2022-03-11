@@ -36,8 +36,9 @@
   <div class="col-md-6 voting pt-4 px-5">
     <h2 class="mb-3 text-center">Add Your Vote</h2>
     <p>Vote below to indicate whether <%= @restaurant.name %> in <%= @restaurant.city %>, <%= @restaurant.state %> allows you to split the check.</p>
+    <%= button_to "Will Split Check", upvote_path(@restaurant), method: :put, class: "d-block btn bg-success mx-auto mb-4 #{'d-none' if notice}" %>
+    <%= button_to "Won't Split Check", downvote_path(@restaurant), method: :put, class: "d-block btn bg-danger mx-auto mb-4 #{'d-none' if notice}" %>
 
-    
     <p id="notice" class="text-center"><%= notice %></p>
   </div>
 </div>
