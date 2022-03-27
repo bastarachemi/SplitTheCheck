@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :restaurants
+  resources :restaurants, except: [:destroy] 
   root 'restaurants#index', as: 'restaurants_index'
 
   get '/restaurants/page/:page', to: 'restaurants#go_to_page', as: 'restaurants_page'
