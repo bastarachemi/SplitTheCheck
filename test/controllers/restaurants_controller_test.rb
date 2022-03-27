@@ -115,4 +115,40 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_equal session[:page], 6
     assert_select 'tbody tr', 2
   end
+
+  test "should get restaurants that are searched for" do
+    get restaurants_url(params: { restaurant_name: "Test Restaurant", restaurant_location: "Massachusetts" })
+    assert_response :success
+    assert_equal "Test Restaurant", session[:restaurant_name]
+    assert_equal "Massachusetts", session[:restaurant_location]
+    assert_equal 1, session[:page]
+    assert_equal 5, session[:last_page]
+    assert_select 'tbody tr', 10
+  end
+
+  test "should properly process upvotes" do
+    get restaurant_url(@restaurant)
+    assert_response :success
+    assert_equal 10, @restaurant.will_split
+    assert_equal 1, @restaurant.wont_split
+    put upvote_path(@restaurant)
+    assert_redirected_to restaurant_url(@restaurant)
+    @restaurant.reload
+    assert_equal 11, @restaurant.will_split
+    assert_equal 1, @restaurant.wont_split
+    assert_equal "Restaurant was upvoted.", flash[:success]
+  end
+
+  test "should properly process downvotes" do
+    get restaurant_url(@restaurant)
+    assert_response :success
+    assert_equal 10, @restaurant.will_split
+    assert_equal 1, @restaurant.wont_split
+    put downvote_path(@restaurant)
+    assert_redirected_to restaurant_url(@restaurant)
+    @restaurant.reload
+    assert_equal 10, @restaurant.will_split
+    assert_equal 2, @restaurant.wont_split
+    assert_equal "Restaurant was downvoted.", flash[:success]
+  end
 end
