@@ -3,6 +3,7 @@ class RestaurantsController < ApplicationController
   before_action :get_search_values, only: [:index]
   before_action :set_page, only: [:index]
   before_action :get_last_page, only: [:index]
+  add_flash_types :success
 
   # GET /restaurants or /restaurants.json
   def index
@@ -11,6 +12,9 @@ class RestaurantsController < ApplicationController
     @restaurant_name = session[:restaurant_name]
     @restaurant_location = session[:restaurant_location]
     @restaurants = Restaurant.order('name').search(session[:restaurant_name], session[:restaurant_location]).limit(10).offset((@page - 1) * 10);
+    if @restaurants.empty?
+      flash.now[:alert] = "No restaurants were found using that search criteria."
+    end
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -72,13 +76,13 @@ class RestaurantsController < ApplicationController
   def upvote
     @restaurant = Restaurant.find(params[:id])
     @restaurant.vote(:will_split)
-    redirect_to restaurant_url(@restaurant), notice: "Thanks for voting! Restaurant was upvoted."
+    redirect_to restaurant_url(@restaurant), success: "Restaurant was upvoted."
   end
 
   def downvote
     @restaurant = Restaurant.find(params[:id])
     @restaurant.vote(:wont_split)
-    redirect_to restaurant_url(@restaurant), notice: "Thanks for voting! Restaurant was downvoted."
+    redirect_to restaurant_url(@restaurant), success: "Restaurant was downvoted."
   end
 
   private

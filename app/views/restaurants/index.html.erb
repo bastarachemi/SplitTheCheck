@@ -44,7 +44,7 @@
     <div id="add-restaurant-btn">
       <%= button_to 'Add New Restaurant', new_restaurant_path, method: :get, class: "d-block btn mb-4" %>
     </div>
-    <div class="align-self-end">
+    <div class="align-self-end <%= 'd-none' if alert %>">
       <nav class="mb-3">
         <ul class="pagination mb-1">
           <%= content_tag :li, class: "page-item" do %>
