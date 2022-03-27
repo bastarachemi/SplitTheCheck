@@ -2,6 +2,7 @@ class Restaurant < ApplicationRecord
   validates :name, :city, :state, presence: true
   validates :name, uniqueness: {scope: [:city, :state]}
 
+  # Searches for restaurants by name and location
   def self.search(restaurant_name, restaurant_location)
     restaurant = Restaurant.all
     if restaurant_name.present?
@@ -15,6 +16,7 @@ class Restaurant < ApplicationRecord
     return restaurant
   end
 
+  # Increases restaurant's number of will_split or wont_split votes
   def vote(split)
     if split == :will_split
       self.increment(:will_split)

@@ -68,17 +68,20 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  # Sets the session page using parameter value and redirects to restaurants page
   def go_to_page
     session[:page] = params[:page].to_i.clamp(1, session[:last_page])
     redirect_to restaurants_url
   end
 
+  # Calls the current restaurant's method for upvoting and redirects to current restaurant page
   def upvote
     @restaurant = Restaurant.find(params[:id])
     @restaurant.vote(:will_split)
     redirect_to restaurant_url(@restaurant), success: "Restaurant was upvoted."
   end
 
+  # Calls the current restaurant's method for downvoting and redirects to current restaurant page
   def downvote
     @restaurant = Restaurant.find(params[:id])
     @restaurant.vote(:wont_split)
@@ -96,6 +99,7 @@ class RestaurantsController < ApplicationController
       params.require(:restaurant).permit(:name, :city, :state, :will_split, :wont_split, :restaurant_name, :restaurant_location)
     end
 
+    # Sets the restaurant name and location for the session using the search parameters
     def get_search_values
       if params[:restaurant_name] || params[:restaurant_location]
         session[:page] = 1
@@ -104,10 +108,12 @@ class RestaurantsController < ApplicationController
       end
     end
 
+    # Sets the page for the session
     def set_page
       session[:page] ||= 1
     end
 
+    # Sets the last page for the session
     def get_last_page
       session[:last_page] = (1.0 * Restaurant.search(session[:restaurant_name], session[:restaurant_location]).count / 10).ceil()
     end
