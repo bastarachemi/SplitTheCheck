@@ -1,5 +1,5 @@
 <div class="row mx-auto mt-0 mb-4 h-100">
-  <div class="d-flex flex-column justify-content-between col-md-6 restaurant-details mb-3 pt-4 px-5">
+  <div class="d-flex flex-column col-md-6 restaurant-details mb-3 pt-4 px-5">
     <div>
       <h2 class="mb-3 text-center">Restaurant Details</h2>
 
@@ -30,15 +30,15 @@
 
       <%= button_to 'Edit Restaurant', edit_restaurant_path(@restaurant), method: :get, class: "d-block btn mx-auto mb-4" %>
     </div>
-    <%= link_to 'Back', restaurants_path, class: "align-items-bottom me-auto" %>
+    <%= link_to 'Back', restaurants_path, class: "me-auto" %>
   </div>
 
   <div class="col-md-6 voting pt-4 px-5">
     <h2 class="mb-3 text-center">Add Your Vote</h2>
     <p>Vote below to indicate whether <%= @restaurant.name %> in <%= @restaurant.city %>, <%= @restaurant.state %> allows you to split the check.</p>
-    <%= button_to "Will Split Check", upvote_path(@restaurant), method: :put, class: "d-block btn bg-success mx-auto mb-4 #{'d-none' if notice}" %>
-    <%= button_to "Won't Split Check", downvote_path(@restaurant), method: :put, class: "d-block btn bg-danger mx-auto mb-4 #{'d-none' if notice}" %>
+    <%= button_to "Will Split Check", upvote_path(@restaurant), method: :put, class: "d-block btn bg-success mx-auto mb-4 #{'d-none' if success}" %>
+    <%= button_to "Won't Split Check", downvote_path(@restaurant), method: :put, class: "d-block btn bg-danger mx-auto mb-4 #{'d-none' if success}" %>
 
-    <p id="notice" class="text-center"><%= notice %></p>
+    <p id="vote-success" class="text-center "><%= success %></p>
   </div>
 </div>
