@@ -1,15 +1,24 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  city: MyString
-  state: MyString
-  will_split: 1
+  name: Boston Eatery
+  city: Boston
+  state: Massachusetts
+  will_split: 10
   wont_split: 1
 
 two:
-  name: MyString
-  city: MyString
-  state: MyString
+  name: Boston Eatery
+  city: Portland
+  state: Maine
   will_split: 1
-  wont_split: 1
+  wont_split: 10
+
+<% 1.upto(50) do |i| %>
+fix_<%= i %>:
+  name: Test Restaurant <%= i %>
+  city: Boston
+  state: Massachusetts
+  will_split: 1
+  wont_split: 10
+<% end %>
