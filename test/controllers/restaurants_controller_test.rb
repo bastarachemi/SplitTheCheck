@@ -51,4 +51,68 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
       delete restaurant_url(@restaurant)
     end
   end
+
+  test "should properly navigate to next page of restaurants, up to the last page 6" do
+    get restaurants_url
+    assert_equal session[:page], 1
+    assert_equal session[:last_page], 6
+
+    1.upto(5) do |page|
+      get restaurants_page_path(page)
+      assert_response :redirect
+      follow_redirect!
+      assert_equal session[:page], page
+      assert_select 'tbody tr', 10
+    end
+
+    get restaurants_page_path(6)
+    assert_response :redirect
+    follow_redirect!
+    assert_equal session[:page], 6
+    assert_select 'tbody tr', 2
+
+    get restaurants_page_path(7)
+    assert_response :redirect
+    follow_redirect!
+    assert_equal session[:page], 6
+    assert_select 'tbody tr', 2
+
+    get restaurants_page_path(1)
+    assert_response :redirect
+    follow_redirect!
+    assert_equal session[:page], 1
+    assert_select 'tbody tr', 10
+  end
+
+  test "should properly navigate to previous page of restaurants, down to page 1" do
+    get restaurants_url
+    assert_equal session[:page], 1
+    assert_equal session[:last_page], 6
+
+    get restaurants_page_path(6)
+    assert_response :redirect
+    follow_redirect!
+    assert_equal session[:page], 6
+    assert_select 'tbody tr', 2
+
+    5.downto(1) do |page|
+      get restaurants_page_path(page)
+      assert_response :redirect
+      follow_redirect!
+      assert_equal session[:page], page
+      assert_select 'tbody tr', 10
+    end
+
+    get restaurants_page_path(0)
+    assert_response :redirect
+    follow_redirect!
+    assert_equal session[:page], 1
+    assert_select 'tbody tr', 10
+
+    get restaurants_page_path(6)
+    assert_response :redirect
+    follow_redirect!
+    assert_equal session[:page], 6
+    assert_select 'tbody tr', 2
+  end
 end
