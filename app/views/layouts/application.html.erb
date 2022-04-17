@@ -15,8 +15,19 @@
   </head>
 
   <body id="bootstrap-overrides" class="d-flex flex-column h-100">
-    <header class="mb-0">
+    <header class="mb-0 d-flex justify-content-between px-4">
       <h1 class="text-center">Split The <span class="orange-text">Check</span></h1>
+      <div class="d-flex align-items-center">
+        <div class="list-group list-group-horizontal">
+          <% if user_signed_in? %>
+          <a class="list-group-item"><%= current_user.email %></a>
+          <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "list-group-item" %>
+          <% else %>
+          <%= link_to 'Log In', new_user_session_path, class: "list-group-item" %>
+          <%= link_to 'Sign Up', new_user_registration_path, class: "list-group-item" %>
+          <% end %>
+        </div>
+      </div>
     </header>
     <main class='mt-0 <%= controller.controller_name %>'>
       <% if notice %>
@@ -28,7 +39,7 @@
       <%= yield %>
     </main>
     <footer class="footer p-4">
-      <small>Last Updated: 03/27/2022</small>
+      <small>Last Updated: 04/14/2022</small>
     </footer>
   </body>
 </html>
