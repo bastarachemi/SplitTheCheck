@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  resources :votes
   devise_for :users
-  resources :restaurants, except: [:destroy] 
+  resources :restaurants, except: [:destroy]
   root 'restaurants#index', as: 'restaurants_index'
 
   get '/restaurants/page/:page', to: 'restaurants#go_to_page', as: 'restaurants_page'

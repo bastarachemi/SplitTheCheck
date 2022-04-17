@@ -1,4 +1,5 @@
 class RestaurantsController < ApplicationController
+  before_action :authenticate_user!, except: %i[ index show go_to_page ]
   before_action :set_restaurant, only: %i[ show edit update destroy ]
   before_action :get_search_values, only: [:index]
   before_action :set_page, only: [:index]
