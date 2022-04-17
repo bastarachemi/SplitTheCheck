@@ -2,6 +2,7 @@ require "test_helper"
 
 class RestaurantTest < ActiveSupport::TestCase
   setup do
+    @user = users(:one)
     @restaurant = restaurants(:one)
   end
 
@@ -93,19 +94,11 @@ class RestaurantTest < ActiveSupport::TestCase
     assert_equal 50, restaurant.count
   end
 
-  test "voting will_split increases the number of will_split votes by 1" do
-    assert_equal 10, @restaurant.will_split
-    assert_equal 1, @restaurant.wont_split
-    @restaurant.vote(:will_split)
-    assert_equal 11, @restaurant.will_split
-    assert_equal 1, @restaurant.wont_split
+  test "will_split counts the number of will_split votes for the restaurant" do
+    assert_equal 1, @restaurant.will_split
   end
 
   test "voting wont_split increases the number of wont_split votes by 1" do
-    assert_equal 10, @restaurant.will_split
-    assert_equal 1, @restaurant.wont_split
-    @restaurant.vote(:wont_split)
-    assert_equal 10, @restaurant.will_split
     assert_equal 2, @restaurant.wont_split
   end
 end

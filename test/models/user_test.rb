@@ -42,12 +42,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "should vote for a restaurant to split the check or not" do
-    assert_equal 3, @user.votes.count
+    assert_equal 3, @user.votes.size
     @user.vote(@restaurant, true)
-    assert_equal 4, @user.votes.count
+    assert_equal 4, @user.votes.size
     @user.vote(@restaurant, true)
     @user.vote(@restaurant, false)
-    assert_equal 6, @user.votes.count
+    assert_equal 6, @user.votes.size
   end
 
 end
