@@ -1,7 +1,10 @@
 require "test_helper"
 
 class RestaurantsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
     @restaurant = restaurants(:one)
   end
 
@@ -12,18 +15,34 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'tbody tr', 10
   end
 
-  test "should get new" do
+  test "should get new if logged in" do
+    sign_in @user
     get new_restaurant_url
     assert_response :success
   end
 
-  test "should create restaurant" do
+  test "should not get new if logged out" do
+    get new_restaurant_url
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should create restaurant if logged in" do
+    sign_in @user
     @restaurant.name = "Different Restaurant"
     assert_difference('Restaurant.count') do
       post restaurants_url, params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
     end
 
     assert_redirected_to restaurant_url(Restaurant.last)
+  end
+
+  test "should not create restaurant if logged out" do
+    @restaurant.name = "Different Restaurant"
+    assert_no_difference('Restaurant.count') do
+      post restaurants_url, params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
+    end
+
+    assert_redirected_to new_user_session_path
   end
 
   test "should show restaurant" do
@@ -34,16 +53,28 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_select '.btn', 3
   end
 
-  test "should get edit" do
+  test "should get edit if logged in" do
+    sign_in @user
     get edit_restaurant_url(@restaurant)
     assert_response :success
     assert_select 'h1', 'Split The Check'
     assert_select 'h2', 'Editing Restaurant'
   end
 
-  test "should update restaurant" do
+  test "should not get edit if logged out" do
+    get edit_restaurant_url(@restaurant)
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should update restaurant if logged in" do
+    sign_in @user
     patch restaurant_url(@restaurant), params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
     assert_redirected_to restaurant_url(@restaurant)
+  end
+
+  test "should not update restaurant if logged out" do
+    patch restaurant_url(@restaurant), params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
+    assert_redirected_to new_user_session_path
   end
 
   test "cannot destroy restaurant" do
@@ -126,29 +157,47 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'tbody tr', 10
   end
 
-  test "should properly process upvotes" do
+  test "should properly process upvotes if logged in" do
+    sign_in @user
     get restaurant_url(@restaurant)
     assert_response :success
-    assert_equal 10, @restaurant.will_split
-    assert_equal 1, @restaurant.wont_split
+    assert_equal 1, @restaurant.will_split
+    assert_equal 2, @restaurant.wont_split
     put upvote_path(@restaurant)
     assert_redirected_to restaurant_url(@restaurant)
     @restaurant.reload
-    assert_equal 11, @restaurant.will_split
-    assert_equal 1, @restaurant.wont_split
+    assert_equal 2, @restaurant.will_split
+    assert_equal 2, @restaurant.wont_split
     assert_equal "Restaurant was upvoted.", flash[:success]
   end
 
-  test "should properly process downvotes" do
+  test "should properly process downvotes if logged in" do
+    sign_in @user
     get restaurant_url(@restaurant)
     assert_response :success
-    assert_equal 10, @restaurant.will_split
-    assert_equal 1, @restaurant.wont_split
+    assert_equal 1, @restaurant.will_split
+    assert_equal 2, @restaurant.wont_split
     put downvote_path(@restaurant)
     assert_redirected_to restaurant_url(@restaurant)
     @restaurant.reload
-    assert_equal 10, @restaurant.will_split
-    assert_equal 2, @restaurant.wont_split
+    assert_equal 1, @restaurant.will_split
+    assert_equal 3, @restaurant.wont_split
     assert_equal "Restaurant was downvoted.", flash[:success]
+  end
+
+  test "should not vote if logged out" do
+    get restaurant_url(@restaurant)
+    assert_response :success
+    assert_equal 1, @restaurant.will_split
+    assert_equal 2, @restaurant.wont_split
+    put upvote_path(@restaurant)
+    assert_redirected_to new_user_session_path
+
+    get restaurant_url(@restaurant)
+    assert_response :success
+    assert_equal 1, @restaurant.will_split
+    assert_equal 2, @restaurant.wont_split
+    put downvote_path(@restaurant)
+    assert_redirected_to new_user_session_path
   end
 end
