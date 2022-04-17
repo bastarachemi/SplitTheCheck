@@ -74,17 +74,17 @@ class RestaurantsController < ApplicationController
     redirect_to restaurants_url
   end
 
-  # Calls the current restaurant's method for upvoting and redirects to current restaurant page
+  # Calls the current user's method for upvoting and redirects to current restaurant page
   def upvote
     @restaurant = Restaurant.find(params[:id])
-    @restaurant.vote(:will_split)
+    current_user.vote(@restaurant, true)
     redirect_to restaurant_url(@restaurant), success: "Restaurant was upvoted."
   end
 
-  # Calls the current restaurant's method for downvoting and redirects to current restaurant page
+  # Calls the current user's method for downvoting and redirects to current restaurant page
   def downvote
     @restaurant = Restaurant.find(params[:id])
-    @restaurant.vote(:wont_split)
+    current_user.vote(@restaurant, false)
     redirect_to restaurant_url(@restaurant), success: "Restaurant was downvoted."
   end
 
