@@ -1,4 +1,5 @@
 class Restaurant < ApplicationRecord
+  has_many :votes, dependent: :destroy
   validates :name, :city, :state, presence: true
   validates :name, uniqueness: {scope: [:city, :state]}
 
