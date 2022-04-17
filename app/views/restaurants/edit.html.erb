@@ -1,11 +1,13 @@
 <div class="row d-flex flex-column mt-0 mx-auto h-100">
-  <h2 class="text-center mb-4">Editing Restaurant</h2>
+  <h2 class="text-center my-4">Editing Restaurant</h2>
 
-    <div class="d-flex flex-column justify-content-between col">
+    <div class="d-flex flex-column col">
       <%= render 'form', restaurant: @restaurant %>
-      <div class="mb-4">
-        <%= link_to 'Cancel Edit', @restaurant %> |
-        <%= link_to 'Back to Home', restaurants_path %>
+      <div class="mb-4 row justify-content-center">
+        <div class="col-sm-7">
+          <%= link_to 'Cancel Edit', @restaurant %> |
+          <%= link_to 'Back to Home', restaurants_path %>
+        </div>
       </div>
     </div>
 

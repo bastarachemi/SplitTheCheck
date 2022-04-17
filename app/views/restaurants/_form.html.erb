@@ -1,4 +1,4 @@
-<%= form_with(model: restaurant) do |form| %>
+<%= form_with(model: restaurant, local: true) do |form| %>
 
   <% invalid = restaurant.errors.include?(:name) %>
   <div class="row mb-4 justify-content-center">
