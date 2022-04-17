@@ -7,5 +7,10 @@ one:
 
 two:
   user: two
-  restaurant: two
+  restaurant: one
   will_split: false
+
+three:
+  user: one
+  restaurant: one
+  will_split: true
