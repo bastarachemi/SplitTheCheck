@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @vote.user_id %>
+</p>
+
+<p>
+  <strong>Restaurant:</strong>
+  <%= @vote.restaurant_id %>
+</p>
+
+<p>
+  <strong>Will split:</strong>
+  <%= @vote.will_split %>
+</p>
+
+<%= link_to 'Edit', edit_vote_path(@vote) %> |
+<%= link_to 'Back', votes_path %>
