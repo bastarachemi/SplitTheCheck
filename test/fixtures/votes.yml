@@ -6,7 +6,7 @@ one:
   will_split: false
 
 two:
-  user: two
+  user: one
   restaurant: one
   will_split: false
 
