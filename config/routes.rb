@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :restaurants, except: [:destroy] 
   root 'restaurants#index', as: 'restaurants_index'
 
