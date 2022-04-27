@@ -3,9 +3,9 @@
 one:
   user: one
   restaurant: one
-  message: MyText
+  message: Good service!
 
 two:
-  user: two
+  user: one
   restaurant: two
-  message: MyText
+  message: Bad service!

@@ -5,5 +5,5 @@ one:
   restaurant: one
 
 two:
-  user: two
-  restaurant: two
+  user: one
+  restaurant: fix_1
