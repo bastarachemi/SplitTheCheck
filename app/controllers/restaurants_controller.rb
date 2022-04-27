@@ -89,6 +89,13 @@ class RestaurantsController < ApplicationController
     redirect_to restaurant_url(@restaurant), success: "Restaurant was downvoted."
   end
 
+  # Calls the current user's favorite method and redirects to the current restaurant page
+  def favorite
+    @restaurant = Restaurant.find(params[:id])
+    current_user.favorite(@restaurant)
+    redirect_to restaurant_url(@restaurant)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant

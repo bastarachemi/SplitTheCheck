@@ -28,7 +28,16 @@
         <%= @restaurant.wont_split %>
       </p>
 
-      <%= button_to 'Edit Restaurant', edit_restaurant_path(@restaurant), method: :get, class: "d-block btn mx-auto mb-4" %>
+      <div class="d-flex flex-wrap justify-content-around">
+      <%= button_to 'Edit Restaurant', edit_restaurant_path(@restaurant), method: :get, class: "btn mb-4" %>
+      <% if user_signed_in? %>
+        <% if current_user.has_favorited?(@restaurant) %>
+          <%= button_to "Unfavorite Restaurant", favorite_restaurant_path(@restaurant), method: :put, class: "btn mb-4" %>
+        <% else %>
+          <%= button_to "Favorite Restaurant", favorite_restaurant_path(@restaurant), method: :put, class: "btn mb-4" %>
+        <% end %>
+      <% end %>
+      </div>
     </div>
     <%= link_to 'Back to Home', restaurants_path, class: "me-auto" %>
   </div>
@@ -36,8 +45,8 @@
   <div class="col-md-6 voting pt-4 px-5">
     <h2 class="mb-3 text-center">Add Your Vote</h2>
     <p>Vote below to indicate whether <%= @restaurant.name %> in <%= @restaurant.city %>, <%= @restaurant.state %> allows you to split the check.</p>
-    <%= button_to "Will Split Check", upvote_path(@restaurant), method: :put, class: "d-block btn bg-success mx-auto mb-4 #{'d-none' if success}" %>
-    <%= button_to "Won't Split Check", downvote_path(@restaurant), method: :put, class: "d-block btn bg-danger mx-auto mb-4 #{'d-none' if success}" %>
+    <%= button_to "Will Split Check", upvote_restaurant_path(@restaurant), method: :put, class: "d-block btn bg-success mx-auto mb-4 #{'d-none' if success}" %>
+    <%= button_to "Won't Split Check", downvote_restaurant_path(@restaurant), method: :put, class: "d-block btn bg-danger mx-auto mb-4 #{'d-none' if success}" %>
 
     <p id="vote-success" class="text-center "><%= success %></p>
   </div>
