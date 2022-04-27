@@ -1,5 +1,5 @@
 <div class="row mx-auto mt-0 mb-4 h-100">
-  <div class="d-flex flex-column col-md-6 restaurant-details mb-3 pt-4 px-5">
+  <div class="d-flex flex-column col-lg-6 restaurant-details mb-3 pt-4 px-5">
     <div>
       <h2 class="mb-3 text-center">Restaurant Details</h2>
 
@@ -50,12 +50,30 @@
     <%= link_to 'Back to Home', restaurants_path, class: "me-auto" %>
   </div>
 
-  <div class="col-md-6 voting pt-4 px-5">
+  <div class="col-lg-6 voting pt-4 px-5">
     <h2 class="mb-3 text-center">Add Your Vote</h2>
     <p>Vote below to indicate whether <%= @restaurant.name %> in <%= @restaurant.city %>, <%= @restaurant.state %> allows you to split the check.</p>
-    <%= button_to "Will Split Check", upvote_restaurant_path(@restaurant), method: :put, class: "d-block btn bg-success mx-auto mb-4 #{'d-none' if success}" %>
-    <%= button_to "Won't Split Check", downvote_restaurant_path(@restaurant), method: :put, class: "d-block btn bg-danger mx-auto mb-4 #{'d-none' if success}" %>
-
+    <div class="d-flex justify-content-around">
+      <%= button_to "Will Split Check", upvote_restaurant_path(@restaurant), method: :put, class: "d-block btn bg-success mx-auto mb-4 #{'d-none' if success}" %>
+      <%= button_to "Won't Split Check", downvote_restaurant_path(@restaurant), method: :put, class: "d-block btn bg-danger mx-auto mb-4 #{'d-none' if success}" %>
+    </div>
     <p id="vote-success" class="text-center "><%= success %></p>
+
+    <h2 class="mt-5 mb-3 text-center">Recent Comments</h2>
+    <% if @comments.count > 0 %>
+    <ul class="list-group list-group-flush">
+    <% @comments.each do |comment| %>
+      <li class="list-group-item bg-transparent py-3">
+        <div class="d-flex justify-content-between">
+          <p class="fst-italic"><%= comment.message %></p>
+          <small class="text-muted ps-1 text-nowrap"><%= distance_of_time_in_words(comment.created_at, Time.now) %> ago</small>
+        </div>
+      </li>
+    <% end %>
+    </ul>
+    <% else %>
+      <h6 class="mb-3 text-center">No comments have been left for this restaurant yet.</h6>
+    <% end %>
+
   </div>
 </div>
