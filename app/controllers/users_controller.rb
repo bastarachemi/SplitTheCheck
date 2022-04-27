@@ -3,7 +3,8 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    @votes = @user.votes.order('created_at DESC');
+    @votes = @user.votes.order('created_at DESC')
     @favorites = @user.favorites.order('created_at DESC')
+    @comments = @user.comments.order('created_at DESC')
   end
 end

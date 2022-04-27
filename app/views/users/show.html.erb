@@ -68,7 +68,39 @@
       </div>
     </div>
 
-    <%= link_to 'Back to Home', restaurants_path, class: "me-auto" %>
+    <div class="col-12">
+      <div class="card overflow-auto p-3 bg-light mb-3" style="--bs-bg-opacity: .2;">
+        <h4 class="mb-3 text-center orange-text card-title">Restaurant Comments</h4>
+        <% if @comments.count > 0 %>
+        <div class="overflow-auto">
+          <table class="table table-striped mx-auto mt-3 text-center">
+            <thead>
+              <tr>
+                <th>Restaurant Name</th>
+                <th>Restaurant Location</th>
+                <th>Comment</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @comments.each do |comment| %>
+              <tr>
+                <td><%= link_to comment.restaurant.name, restaurant_url(comment.restaurant) %></td>
+                <td><%= comment.restaurant.city %>, <%= comment.restaurant.state %></td>
+                <td style="width:50%"><%= comment.message %></td>
+                <td><%= comment.created_at.to_date %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <% else %>
+        <h6 class="mb-3 text-center">You have not left comments for any restaurants yet.</h6>
+        <% end %>
+      </div>
+      <%= link_to 'Back to Home', restaurants_path, class: "me-auto" %>
+    </div>
 
   </div>
 
