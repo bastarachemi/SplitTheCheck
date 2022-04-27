@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'users/show'
   devise_for :users
+  get '/users/profile', to: 'users#show', as: 'user_profile'
   resources :restaurants, except: [:destroy] do
     member do
       put 'upvote', as: 'upvote'
