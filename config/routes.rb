@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       put 'downvote', as: 'downvote'
       put 'favorite', as: 'favorite'
     end
+    resources :comments
   end
   root 'restaurants#index', as: 'restaurants_index'
 
