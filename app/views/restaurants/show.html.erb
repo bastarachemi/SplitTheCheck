@@ -43,6 +43,7 @@
         <% else %>
           <%= button_to "Favorite Restaurant", favorite_restaurant_path(@restaurant), method: :put, class: "btn mb-4" %>
         <% end %>
+        <%= button_to "Leave a Comment", new_restaurant_comment_path(@restaurant), method: :get, class: "btn mb-4" %>
       <% end %>
       </div>
     </div>

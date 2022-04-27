@@ -1,5 +1,12 @@
-<h1>New Comment</h1>
-
-<%= render 'form', comment: @comment %>
-
-<%= link_to 'Back', comments_path %>
+<div class="row d-flex flex-column mt-0 mx-auto h-100">
+  <h2 class="text-center mt-4">Leave a Comment</h2>
+  <h5 class="text-center my-3"><%= @restaurant.name %> in <%= @restaurant.city %>, <%= @restaurant.state %></h5>
+  <div class="d-flex flex-column col">
+    <%= render 'form', comment: @comment %>
+    <div class="row mb-4 justify-content-center">
+      <div class="col-sm-7">
+        <%= link_to 'Cancel', @restaurant %>
+      </div>
+    </div>
+  </div>
+</div>

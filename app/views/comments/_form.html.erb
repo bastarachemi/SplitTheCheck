@@ -1,32 +1,32 @@
-<%= form_with(model: comment) do |form| %>
-  <% if comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-      <ul>
-        <% comment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: [@restaurant, @comment], local: true) do |form| %>
+  <% invalid = @comment.errors.include?(:message) %>
+  <div class="row mb-4 justify-content-center">
+    <div class="col-sm-12">
+      <%= form.label :message, class: "d-none" %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
+    <div class="col-sm-7">
+      <%= form.text_area :message, rows: 10, class: "form-control #{'is-invalid' if invalid}" %>
+      <% if invalid %>
+      <div class="invalid-feedback d-block">
+        <% @comment.errors.full_messages_for(:message).each do |error_message| %>
+          <%= error_message %>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :restaurant_id %>
-    <%= form.text_field :restaurant_id %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
 
   <div class="field">
-    <%= form.label :message %>
-    <%= form.text_area :message %>
+    <%= form.hidden_field :restaurant_id, value: @restaurant.id %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="row justify-content-center">
+    <div class="actions col-sm-7 ">
+      <%= form.submit "Save Comment", class: "btn px-4 mb-4" %>
+    </div>
   </div>
 <% end %>
