@@ -50,4 +50,25 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 6, @user.votes.size
   end
 
+  test "should verify if a user has favorited a restaurant" do
+    assert_equal false, @user.has_favorited?(@restaurant)
+    assert @user.has_favorited?(restaurants(:two))
+  end
+
+  test "should favorite a restaurant" do
+    assert_equal false, @user.has_favorited?(@restaurant)
+    assert_equal 2, @user.favorites.count
+    @user.favorite(@restaurant)
+    assert @user.has_favorited?(@restaurant)
+    assert_equal 3, @user.favorites.count
+  end
+
+  test "should unfavorite restaurant" do
+    assert @user.has_favorited?(restaurants(:two))
+    assert_equal 2, @user.favorites.count
+    @user.favorite(restaurants(:two))
+    assert_equal false, @user.has_favorited?(restaurants(:two))
+    assert_equal 1, @user.favorites.count
+  end
+
 end

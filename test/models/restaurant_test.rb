@@ -99,7 +99,7 @@ class RestaurantTest < ActiveSupport::TestCase
     assert_equal 1, restaurants(:two).will_split
   end
 
-  test "voting wont_split increases the number of wont_split votes by 1" do
+  test "wont_split counts the number of wont_split votes for the restaurant" do
     assert_equal 2, @restaurant.wont_split
     assert_equal 0, restaurants(:two).wont_split
   end
