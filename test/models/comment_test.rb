@@ -7,5 +7,5 @@ class CommentTest < ActiveSupport::TestCase
     assert comment.invalid?
     assert comment.errors[:message].any?
   end
-  
+
 end

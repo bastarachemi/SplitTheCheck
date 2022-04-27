@@ -70,16 +70,37 @@ class RestaurantsTest < ApplicationSystemTestCase
 
   test "voting for a Restaurant" do
     sign_in @user
-    visit restaurants_url
-    click_on "Vote", match: :first
+    @new_restaurant = restaurants(:fix_2)
 
+    visit restaurant_url(@new_restaurant)
     click_on "Will Split"
     assert_text "Restaurant was upvoted."
-    click_on "Back to Home"
 
-    click_on "Vote", match: :first
+    visit user_profile_url
+    assert_selector "td", text: @new_restaurant.name
+
+    visit restaurant_url(@new_restaurant)
     click_on "Won't Split"
     assert_text "Restaurant was downvoted."
+  end
+
+  test "favoriting a Restaurant" do
+    sign_in @user
+    @new_restaurant = restaurants(:fix_2)
+
+    visit restaurant_url(@new_restaurant)
+    assert_selector "svg", count: 0
+    click_on "Favorite Restaurant"
+    assert_selector "svg", count: 1
+    visit user_profile_url
+    assert_selector "td", text: @new_restaurant.name
+
+    visit restaurant_url(@new_restaurant)
+    click_on "Unfavorite Restaurant"
+    assert_no_selector "svg"
+
+    visit user_profile_url
+    assert_no_selector "td", text: @new_restaurant.name
   end
 
 end
