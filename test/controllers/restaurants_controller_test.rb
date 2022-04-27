@@ -163,7 +163,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 1, @restaurant.will_split
     assert_equal 2, @restaurant.wont_split
-    put upvote_path(@restaurant)
+    put upvote_restaurant_path(@restaurant)
     assert_redirected_to restaurant_url(@restaurant)
     @restaurant.reload
     assert_equal 2, @restaurant.will_split
@@ -177,7 +177,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 1, @restaurant.will_split
     assert_equal 2, @restaurant.wont_split
-    put downvote_path(@restaurant)
+    put downvote_restaurant_path(@restaurant)
     assert_redirected_to restaurant_url(@restaurant)
     @restaurant.reload
     assert_equal 1, @restaurant.will_split
@@ -190,14 +190,47 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 1, @restaurant.will_split
     assert_equal 2, @restaurant.wont_split
-    put upvote_path(@restaurant)
+    put upvote_restaurant_path(@restaurant)
     assert_redirected_to new_user_session_path
 
     get restaurant_url(@restaurant)
     assert_response :success
     assert_equal 1, @restaurant.will_split
     assert_equal 2, @restaurant.wont_split
-    put downvote_path(@restaurant)
+    put downvote__restaurant_path(@restaurant)
     assert_redirected_to new_user_session_path
   end
+
+  test "should favorite restaurant if logged in" do
+    sign_in @user
+    get restaurant_url(@restaurant)
+    assert_response :success
+    assert_equal 0, @restaurant.favorites.count
+    put favorite_restaurant_path
+    @restaurant.reload
+    assert_equal 1, @restaurant.favorites.count
+    assert @user.has_favorited?(@restaurant)
+  end
+
+  test "should unfavorite restaurant if logged in" do
+    sign_in @user
+    get restaurant_url(restaurants(:two))
+    assert_response :success
+    assert_equal 1, restaurants(:two).favorites.count
+    put favorite_restaurant_path
+    restaurants(:two).reload
+    assert_equal 0, restaurants(:two).favorites.count
+    assert_equal false, @user.has_favorited?(restaurants(:two))
+  end
+
+  test "should not favorite restaurant if logged out" do
+    get restaurant_url(@restaurant)
+    assert_response :success
+    assert_equal 0, @restaurant.favorites.count
+    put favorite_restaurant_path(@restaurant)
+    assert_redirected_to new_user_session_path
+    @restaurant.reload
+    assert_equal 0, @restaurant.favorites.count
+  end
+
 end
