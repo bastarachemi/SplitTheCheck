@@ -20,12 +20,15 @@
       <div class="d-flex align-items-center">
         <div class="list-group list-group-horizontal">
           <% if user_signed_in? %>
-          <a class="list-group-item"><%= current_user.email %></a>
-          <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "list-group-item" %>
+            <a class="list-group-item dropdown-toggle" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"><%= current_user.email %></a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><%= link_to 'View Profile', user_profile_path, class: "dropdown-item" %></li>
+            </ul>
+            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "list-group-item" %>
           <% else %>
-          <%= link_to 'Log In', new_user_session_path, class: "list-group-item" %>
-          <%= link_to 'Sign Up', new_user_registration_path, class: "list-group-item" %>
-          <% end %>
+            <%= link_to 'Log In', new_user_session_path, class: "list-group-item" %>
+            <%= link_to 'Sign Up', new_user_registration_path, class: "list-group-item" %>
+        <% end %>
         </div>
       </div>
     </header>
