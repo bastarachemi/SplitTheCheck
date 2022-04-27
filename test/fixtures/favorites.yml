@@ -2,7 +2,7 @@
 
 one:
   user: one
-  restaurant: one
+  restaurant: two
 
 two:
   user: one

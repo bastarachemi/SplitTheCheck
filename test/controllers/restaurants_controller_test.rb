@@ -30,7 +30,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
     @restaurant.name = "Different Restaurant"
     assert_difference('Restaurant.count') do
-      post restaurants_url, params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
+      post restaurants_url, params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state } }
     end
 
     assert_redirected_to restaurant_url(Restaurant.last)
@@ -39,7 +39,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   test "should not create restaurant if logged out" do
     @restaurant.name = "Different Restaurant"
     assert_no_difference('Restaurant.count') do
-      post restaurants_url, params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
+      post restaurants_url, params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state } }
     end
 
     assert_redirected_to new_user_session_path
@@ -68,12 +68,12 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update restaurant if logged in" do
     sign_in @user
-    patch restaurant_url(@restaurant), params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
+    patch restaurant_url(@restaurant), params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state } }
     assert_redirected_to restaurant_url(@restaurant)
   end
 
   test "should not update restaurant if logged out" do
-    patch restaurant_url(@restaurant), params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split: @restaurant.will_split, wont_split: @restaurant.wont_split } }
+    patch restaurant_url(@restaurant), params: { restaurant: { city: @restaurant.city, name: @restaurant.name, state: @restaurant.state } }
     assert_redirected_to new_user_session_path
   end
 
@@ -197,7 +197,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 1, @restaurant.will_split
     assert_equal 2, @restaurant.wont_split
-    put downvote__restaurant_path(@restaurant)
+    put downvote_restaurant_path(@restaurant)
     assert_redirected_to new_user_session_path
   end
 
