@@ -1,2 +1,75 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="p-4 container-fluid">
+  <h2 class="mb-4 text-center">User Summary Page</h2>
+  <div class="row g-5">
+
+    <div class="col-lg-7">
+      <div class="card p-3 bg-light" style="--bs-bg-opacity: .2;">
+        <h4 class="mb-3 text-center orange-text card-title">Votes by Restaurant</h4>
+        <% if @votes.count > 0 %>
+        <div class="overflow-auto">
+          <table class="table table-striped mx-auto mt-3 text-center">
+            <thead>
+              <tr>
+                <th>Restaurant Name</th>
+                <th>Restaurant Location</th>
+                <th>Will Split?</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @votes.each do |vote| %>
+              <tr>
+                <td><%= link_to vote.restaurant.name, restaurant_url(vote.restaurant) %></td>
+                <td><%= vote.restaurant.city %>, <%= vote.restaurant.state %></td>
+                <% if vote.will_split%>
+                <td>Yes</td>
+                <% else %>
+                <td>No</td>
+                <% end %>
+                <td><%= vote.created_at.to_date %></td>
+              </tr>
+              <% end %>
+            </tbody>
+
+          </table>
+        </div>
+        <% else %>
+        <h6 class="mb-3 text-center">You have not voted for any restaurants yet.</h6>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card overflow-auto p-3 bg-light" style="--bs-bg-opacity: .2;">
+        <h4 class="mb-3 text-center orange-text card-title">Favorite Restaurants</h4>
+        <% if @favorites.count > 0 %>
+        <div class="overflow-auto">
+          <table class="table table-striped mx-auto mt-3 text-center">
+            <thead>
+              <tr>
+                <th>Restaurant Name</th>
+                <th>Restaurant Location</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @favorites.each do |favorite| %>
+              <tr>
+                <td><%= link_to favorite.restaurant.name, restaurant_url(favorite.restaurant) %></td>
+                <td><%= favorite.restaurant.city %>, <%= favorite.restaurant.state %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <% else %>
+        <h6 class="mb-3 text-center">You have not favorited any restaurants yet.</h6>
+        <% end %>
+      </div>
+    </div>
+
+    <%= link_to 'Back to Home', restaurants_path, class: "me-auto" %>
+
+  </div>
+
+</div>
