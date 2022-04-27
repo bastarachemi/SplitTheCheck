@@ -12,7 +12,6 @@ namespace :import do
       r.save
     end
 
-    require "csv"
     csv_text = File.read(Rails.root.join("lib", "user_data.csv"))
     csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
     csv.each do |row|
@@ -26,11 +25,21 @@ namespace :import do
     csv_text = File.read(Rails.root.join("lib", "vote_data.csv"))
     csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
     csv.each do |row|
-      r = Vote.new
-      r.user_id = row["user_id"]
-      r.restaurant_id = row["restaurant_id"]
-      r.will_split = row["will_split"]
-      r.save
+      v = Vote.new
+      v.user_id = row["user_id"]
+      v.restaurant_id = row["restaurant_id"]
+      v.will_split = row["will_split"]
+      v.save
+    end
+
+    csv_text = File.read(Rails.root.join("lib", "comment_data.csv"))
+    csv = CSV.parse(csv_text, :headers => true, :encoding => "ISO-8859-1")
+    csv.each do |row|
+      c = Comment.new
+      c.user_id = row["user_id"]
+      c.restaurant_id = row["restaurant_id"]
+      c.message = row["message"]
+      c.save
     end
   end
 end
