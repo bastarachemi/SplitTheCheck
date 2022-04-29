@@ -20,7 +20,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1 or /restaurants/1.json
   def show
-    @comments = @restaurant.comments.order('created_at DESC').limit(2);
+    @comments = @restaurant.comments.order('created_at DESC').limit(3);
   end
 
   # GET /restaurants/new
