@@ -36,14 +36,14 @@
       </p>
 
       <div class="d-flex flex-wrap justify-content-around">
-      <%= button_to 'Edit Restaurant', edit_restaurant_path(@restaurant), method: :get, class: "btn mb-4" %>
+      <%= button_to 'Edit Restaurant', edit_restaurant_path(@restaurant), method: :get, class: "btn mx-2 mb-4" %>
       <% if user_signed_in? %>
+        <%= button_to "Leave a Comment", new_restaurant_comment_path(@restaurant), method: :get, class: "btn mx-2 mb-4" %>
         <% if current_user.has_favorited?(@restaurant) %>
-          <%= button_to "Unfavorite Restaurant", favorite_restaurant_path(@restaurant), method: :put, class: "btn mb-4" %>
+          <%= button_to "Unfavorite Restaurant", favorite_restaurant_path(@restaurant), method: :put, class: "btn mx-2 mb-4" %>
         <% else %>
-          <%= button_to "Favorite Restaurant", favorite_restaurant_path(@restaurant), method: :put, class: "btn mb-4" %>
+          <%= button_to "Favorite Restaurant", favorite_restaurant_path(@restaurant), method: :put, class: "btn mx-2 mb-4" %>
         <% end %>
-        <%= button_to "Leave a Comment", new_restaurant_comment_path(@restaurant), method: :get, class: "btn mb-4" %>
       <% end %>
       </div>
     </div>
